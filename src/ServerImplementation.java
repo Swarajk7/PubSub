@@ -2,7 +2,7 @@ import java.rmi.*;
 import java.rmi.server.*;
 
 
-public class ServerImplementation extends UnicastRemoteObject implements IServer {
+public class ServerImplementation extends UnicastRemoteObject implements IServerImplementation {
 
     protected ServerImplementation() throws RemoteException {
         super();

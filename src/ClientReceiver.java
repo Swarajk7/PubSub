@@ -1,6 +1,10 @@
 import java.io.IOException;
 import java.net.*;
-
+/*
+This is a thread which will keep running and it will listen to a socket at a given port.
+We need to implement singleton socket at client also. Then we won't need to pass around socket object.
+Singleton will work fine because socket is readonly.
+ */
 public class ClientReceiver implements Runnable{
     private DatagramSocket socket;
     private byte[] buf = new byte[256];

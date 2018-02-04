@@ -5,7 +5,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /*
-Singleton class for handling server side config read and write
+Singleton class for handling server side config read and write.
+ConfigurationManger is also readonly and hence won't cause any conflicts or concurrency issue.
  */
 public class ConfigManager {
     public static final String RMI_REGISTRY_ADDRESS = "rmiregistryaddress";

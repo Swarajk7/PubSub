@@ -2,8 +2,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-
+/*
+Class to deal with sending information to client given an IP and PORT.
+Uses singleton socket at serverside.
+After publish() method is invoked by any client this piece of code will be invoked.
+ */
 public class Sender implements ISender {
     private DatagramSocket socket;
     private boolean isSocketCreated = false;

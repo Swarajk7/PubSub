@@ -13,7 +13,7 @@ public class Client {
             //start the receiver thread to receive the incoming messages and run infinitely
             new ClientReceiver(socket);
 
-            IServer stub = (IServer) Naming.lookup("rmi://localhost:3000/khada004" );
+            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://localhost:3000/khada004" );
             System.out.println(stub.ping());
 
             while (true) {
