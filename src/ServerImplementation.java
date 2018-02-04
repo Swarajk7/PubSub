@@ -19,7 +19,7 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
     }
 
     @Override
-    public boolean subscribe(String IP, int PORT, String article)  {
+    public boolean subscribe(String IP, int PORT, String article) {
         return false;
     }
 
@@ -30,7 +30,16 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
 
     @Override
     public boolean publish(String article, String IP, int PORT)  {
-        return false;
+        System.out.println(IP);
+        try {
+            ConfigManager configManager = ConfigManager.create();
+            ISender sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT))));
+            sender.sendMessageToClient(IP, PORT, "Hello" + article);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override

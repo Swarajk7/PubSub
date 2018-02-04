@@ -11,7 +11,7 @@ public class Sender implements ISender {
         this.isSocketCreated = true;
         ConfigManager configManager = ConfigManager.create();
         int port = Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT));
-        this.socket = new DatagramSocket(port);
+        this.socket = UDPSocket.createSocket(port);
     }
     public Sender(DatagramSocket socket) {
         this.socket = socket;
