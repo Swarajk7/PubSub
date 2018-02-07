@@ -2,27 +2,20 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.rmi.*;
+import java.util.HashMap;
 
 public class Server {
-    public static void main(String args[]){
+    private HashMap<String, ClientDetails> clientMap;
+
+    public static void main(String args[]) {
         try {
 
             ConfigManager configManager = ConfigManager.create();
             ServerImplementation stub = new ServerImplementation();
             Naming.rebind(configManager.getValue(ConfigManager.RMI_REGISTRY_ADDRESS), stub);
 
-            ISender sender = new Sender();
-
-            Thread.sleep(3000);
-            for (int i = 0; i < 10; i++) {
-                sender.sendMessageToClient("127.0.0.1", 4545, "Hello" + i);
-                Thread.sleep(1000);
-            }
-
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

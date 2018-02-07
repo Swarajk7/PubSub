@@ -1,17 +1,23 @@
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Dictionary;
+import java.util.HashMap;
 
 public class UDPSocket {
     private DatagramSocket socket;
-    private static UDPSocket udpSocket = null;
+
+    private static HashMap<Integer, DatagramSocket> udpSockets;
+
     private UDPSocket(int port) throws SocketException {
         this.socket = new DatagramSocket(port);
     }
     public static DatagramSocket createSocket(int port) throws SocketException {
         //if already created it will ignore the port. Need to redesign
-        if(udpSocket == null) {
-            udpSocket = new UDPSocket(port);
+
+        if (udpSockets.get(port) == null) {
+            udpSockets.put(port, new DatagramSocket(port));
         }
-        return udpSocket.socket;
+
+        return udpSockets.get(port);
     }
 }

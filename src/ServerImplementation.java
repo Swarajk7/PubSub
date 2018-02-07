@@ -3,14 +3,20 @@ import java.rmi.server.*;
 
 
 public class ServerImplementation extends UnicastRemoteObject implements IServerImplementation {
-
+    private Utility utility;
     protected ServerImplementation() throws RemoteException {
         super();
+        utility = new Utility();
     }
 
     @Override
-    public boolean join(String IP, int PORT) {
-        return false;
+    public boolean join(String IP, int PORT) throws Exception {
+        if(!utility.validateIP(IP)) throw new Exception("Invalid IP Address");
+        String ip_port = utility.appendIPAndPort(IP,PORT);
+        //check is same ip and port, already a client is joined and then throw exception
+        ClientDetails clientDetails = new ClientDetails(IP, PORT);
+        //add clientDetails to client Queue
+        return true;
     }
 
     @Override
