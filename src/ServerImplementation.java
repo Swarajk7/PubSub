@@ -4,6 +4,7 @@ import java.rmi.server.*;
 
 public class ServerImplementation extends UnicastRemoteObject implements IServerImplementation {
     private Utility utility;
+    
     protected ServerImplementation() throws RemoteException {
         super();
         utility = new Utility();

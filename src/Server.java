@@ -5,7 +5,6 @@ import java.rmi.*;
 import java.util.HashMap;
 
 public class Server {
-    private HashMap<String, ClientDetails> clientMap;
 
     public static void main(String args[]) {
         try {
