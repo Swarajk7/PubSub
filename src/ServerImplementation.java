@@ -15,9 +15,8 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
     @Override
     public boolean join(String IP, int PORT) throws RemoteException {
 
-        data.addToServer(IP,PORT);
         //add clientDetails to client Queue
-
+        data.addToServer(IP,PORT);
         return true;
     }
 
