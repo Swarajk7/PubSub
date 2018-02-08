@@ -14,6 +14,10 @@ public class Utility {
         return matcher.matches();
     }
 
+    boolean validateArticle(String article){
+        return true;
+    }
+
     String appendIPAndPort(String IP, int port) {
         return IP + ":" + port;
     }
