@@ -35,7 +35,8 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
 
     @Override
     public boolean unsubscribe(String IP, int PORT, String article) throws RemoteException {
-        return false;
+        data.unSubscribe(IP,PORT,article);
+        return true;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
     }
 
     @Override
-    public boolean ping() throws RemoteException {
-        return false;
+    public String ping(String msg) throws RemoteException {
+        return msg;
     }
 }
