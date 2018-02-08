@@ -40,15 +40,16 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
 
     @Override
     public boolean publish(String article, String IP, int PORT) throws RemoteException {
-        System.out.println(IP + ":" + PORT);
-        try {
-            ConfigManager configManager = ConfigManager.create();
-            ISender sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT))));
-            sender.sendMessageToClient(IP, PORT, "Hello" + article);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
+        data.publish(article,IP,PORT);
+//        System.out.println(IP + ":" + PORT);
+//        try {
+//            ConfigManager configManager = ConfigManager.create();
+//            ISender sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT))));
+//            sender.sendMessageToClient(IP, PORT, "Hello" + article);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            return false;
+//        }
         return true;
     }
 
