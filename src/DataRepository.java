@@ -117,7 +117,7 @@ public class DataRepository {
         if (!utility.validateArticle(article, false)) throw new RemoteException("Invalid Article");
 
         //trim the string to remove padding spaces
-        String[] words = article.trim().split(";");
+        String[] words = article.trim().split(";",-1);
 
         if (!"".equals(words[0])) {
             if (typeToClientMap.containsKey(words[0])) {
@@ -153,14 +153,14 @@ public class DataRepository {
     public ClientDetails validateAndGetClientForPublish(String key, String[] tokens) {
         return clientMap.get(key);
     }
-    public void publish(String article, String IP, int PORT) throws  RemoteException{
+    public void publish(String article, String IP, int PORT) throws  RemoteException {
         if (!utility.validateIP(IP)) throw new RemoteException("Invalid IP Address");
         String ip_port = utility.appendIPAndPort(IP, PORT);
 
-        if (!utility.validateArticle(article, false)) throw new RemoteException("Invalid Article");
+        if (!utility.validateArticle(article, true)) throw new RemoteException("Invalid Article");
 
         //trim the string to remove padding spaces
-        String[] words = article.trim().split(";",-1);
+        String[] words = article.trim().split(";", -1);
         HashSet<String> publishSet = new HashSet<String>();
 
         if (!"".equals(words[0])) {
@@ -182,7 +182,7 @@ public class DataRepository {
         }
 
         for (String type : publishSet) {
-            Pair tmpPair = new Pair(ip_port,words[3]);
+            Pair tmpPair = new Pair(type, article);
             publishQueue.add(tmpPair);
         }
 

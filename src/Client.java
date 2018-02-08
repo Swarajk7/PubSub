@@ -58,7 +58,7 @@ public class Client {
                         case 4:
                             System.out.println("Enter UnSubscribe Article?");
                             article = reader.readLine();
-                            stub.subscribe(IP, port, article);
+                            stub.unsubscribe(IP, port, article);
                             break;
                         case 5:
                             System.out.println("Enter Publish Article?");
