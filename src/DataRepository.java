@@ -1,6 +1,9 @@
+import javafx.util.Pair;
+
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class DataRepository {
     private HashMap<String, HashSet<String>> typeToClientMap, organizationToClientMap, originatorToClientMap;
@@ -8,6 +11,7 @@ public class DataRepository {
     private int MAX_COUNT = 10;
     private static DataRepository repository;
     private Utility utility;
+    private Queue<Pair<String,String>> publishQueue;
 
     private DataRepository() {
         typeToClientMap = new HashMap<>();
@@ -15,7 +19,7 @@ public class DataRepository {
         originatorToClientMap = new HashMap<>();
         clientMap = new HashMap<>();
         utility = new Utility();
-
+        publishQueue = new ConcurrentLinkedQueue<>();
     }
 
     public static DataRepository create() {

@@ -24,7 +24,7 @@ public class Sender implements ISender {
         byte[] buf = msg.getBytes();
         try {
             InetAddress address = InetAddress.getByName(IP);
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 4546);
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
             socket.send(packet);
         } catch (Exception ex) {
             ex.printStackTrace();
