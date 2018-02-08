@@ -52,7 +52,7 @@ public class DataRepository {
 
         if (!clientMap.containsKey(ip_port)) throw new RemoteException("Haven't joined server yet!!!");
 
-        if(!utility.validateArticle(article)) throw new RemoteException("Invalid Article");
+        if(!utility.validateArticle(article, false)) throw new RemoteException("Invalid Article");
 
         //trim the string to remove padding spaces
         String[] words = article.trim().split(";");
