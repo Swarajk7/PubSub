@@ -145,4 +145,12 @@ public class DataRepository {
 
     }
 
+    public Pair<String, String> getHeadItemFromPublishQueue() {
+        //ensures no other thread is getting this item and Queue is concurreny safe
+        return publishQueue.poll();
+    }
+
+    public ClientDetails validateAndGetClientForPublish(String key, String[] tokens) {
+        return clientMap.get(key);
+    }
 }
