@@ -145,4 +145,39 @@ public class DataRepository {
 
     }
 
+    public void publish(String article, String IP, int PORT) throws  RemoteException{
+        if (!utility.validateIP(IP)) throw new RemoteException("Invalid IP Address");
+        String ip_port = utility.appendIPAndPort(IP, PORT);
+
+        if (!utility.validateArticle(article, false)) throw new RemoteException("Invalid Article");
+
+        //trim the string to remove padding spaces
+        String[] words = article.trim().split(";",-1);
+        HashSet<String> publishSet = new HashSet<String>();
+
+        if (!"".equals(words[0])) {
+            if (typeToClientMap.containsKey(words[0])) {
+                publishSet.addAll(typeToClientMap.get(words[0]));
+            }
+        }
+
+        if (!"".equals(words[1])) {
+            if (originatorToClientMap.containsKey(words[1])) {
+                publishSet.addAll(originatorToClientMap.get(words[1]));
+            }
+        }
+
+        if (!"".equals(words[2])) {
+            if (organizationToClientMap.containsKey(words[2])) {
+                publishSet.addAll(organizationToClientMap.get(words[2]));
+            }
+        }
+
+        for (String type : publishSet) {
+            Pair tmpPair = new Pair(ip_port,words[3]);
+            publishQueue.add(tmpPair);
+        }
+
+    }
+
 }
