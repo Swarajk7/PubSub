@@ -9,6 +9,7 @@ public class PublishQueueListener implements Runnable {
     private String name;
 
     PublishQueueListener(String name) throws IOException {
+        //store name and get repository, socket which uses singleton
         this.name = name;
         ConfigManager configManager = ConfigManager.create();
         sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT))));
@@ -23,10 +24,10 @@ public class PublishQueueListener implements Runnable {
             if(itemToPublish==null) {
                 try {
                     Thread.sleep(100);
-                    continue;
                 } catch (Exception ex) {
                     System.out.println("Thread Name:" + this.name + " " + ex.getMessage());
                 }
+                continue;
             }
             String article = itemToPublish.getValue();
             String tokens[] = article.split(";", -1);

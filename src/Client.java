@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Client {
 
+    private static final boolean debugmode = true;
+
     public static void main(String args[]) {
         //take port number as command line argument
         System.out.println(args.length);
@@ -41,7 +43,7 @@ public class Client {
             while (!breakfromloop) {
                 try {
                     System.out.println("Choose an Option? \n1. JOIN\n" +
-                            "2. LEAVE\n3. Subscribe\n4. UnSubscribe\n5. Publish");
+                            "2. LEAVE\n3. Subscribe\n4. UnSubscribe\n5. Publish\n6. Sleep");
                     int readValue = Integer.parseInt(reader.readLine());
                     switch (readValue) {
                         case 1:
@@ -65,12 +67,17 @@ public class Client {
                             article = reader.readLine();
                             stub.publish(article, IP, port);
                             break;
+                        case 6:
+                            int sleeptime = Integer.parseInt(reader.readLine());
+                            Thread.sleep(sleeptime);
+                            break;
                         default:
                             System.out.println("Invalid Input");
                             break;
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    if(debugmode) break;
                 }
             }
         } catch (Exception e) {

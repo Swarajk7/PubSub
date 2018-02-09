@@ -2,7 +2,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.rmi.*;
-import java.util.HashMap;
 
 public class Server {
 
@@ -13,7 +12,7 @@ public class Server {
             ServerImplementation stub = new ServerImplementation();
             Naming.rebind(configManager.getValue(ConfigManager.RMI_REGISTRY_ADDRESS), stub);
 
-            int numer_of_publisher_threads = 1;
+            int numer_of_publisher_threads = 2;
             //spawn threads to publish queue
             for (int i = 0; i < numer_of_publisher_threads; i++) {
                 new PublishQueueListener("PublisherThread:" + i);
