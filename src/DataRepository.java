@@ -4,9 +4,12 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 public class DataRepository {
-    private HashMap<String, HashSet<String>> typeToClientMap, organizationToClientMap, originatorToClientMap;
+    private HashMap<String, Set<String>> typeToClientMap, organizationToClientMap, originatorToClientMap;
     private HashMap<String, ClientDetails> clientMap;
     private int MAX_COUNT = 10;
     private static DataRepository repository;
@@ -75,7 +78,8 @@ public class DataRepository {
             if (typeToClientMap.containsKey(words[0])) {
                 typeToClientMap.get(words[0]).add(ip_port);
             } else {
-                HashSet<String> typeSet = new HashSet<String>();
+                // Assuming that maximum number of clients for this system will be 100
+                Set<String> typeSet = (Set) ConcurrentHashMap.newKeySet(100);
                 typeSet.add(ip_port);
                 typeToClientMap.put(words[0], typeSet);
             }
@@ -87,7 +91,8 @@ public class DataRepository {
             if (originatorToClientMap.containsKey(words[1])) {
                 originatorToClientMap.get(words[1]).add(ip_port);
             } else {
-                HashSet<String> originatorSet = new HashSet<String>();
+                // Assuming that maximum number of clients for this system will be 100
+                Set<String> originatorSet = (Set) ConcurrentHashMap.newKeySet(100);
                 originatorSet.add(ip_port);
                 originatorToClientMap.put(words[1], originatorSet);
             }
@@ -98,7 +103,8 @@ public class DataRepository {
             if (organizationToClientMap.containsKey(words[2])) {
                 organizationToClientMap.get(words[2]).add(ip_port);
             } else {
-                HashSet<String> orgSet = new HashSet<String>();
+                // Assuming that maximum number of clients for this system will be 100
+                Set<String> orgSet = (Set) ConcurrentHashMap.newKeySet(100);
                 orgSet.add(ip_port);
                 organizationToClientMap.put(words[2], orgSet);
             }
