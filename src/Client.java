@@ -36,6 +36,9 @@ public class Client {
             //hardcoded server address
             IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://localhost:3000/khada004");
 
+            //start ping thread
+            new ClientPingServerThread(stub,IP,port);
+
             boolean breakfromloop = false;
             String article;
 

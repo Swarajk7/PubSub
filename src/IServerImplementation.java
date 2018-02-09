@@ -11,6 +11,6 @@ public interface IServerImplementation extends Remote {
 
     boolean publish(String article, String IP, int PORT) throws RemoteException;
 
-    String ping(String msg) throws RemoteException;
+    String ping() throws RemoteException;
 
 }

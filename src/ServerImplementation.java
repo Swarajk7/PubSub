@@ -60,7 +60,7 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
     }
 
     @Override
-    public String ping(String msg) throws RemoteException {
-        return msg;
+    public String ping() throws RemoteException {
+        return "OK";
     }
 }
