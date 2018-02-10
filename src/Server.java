@@ -8,6 +8,13 @@ public class Server {
     public static void main(String args[]) {
         try {
 
+            InetAddress ip;
+            String hostname;
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            System.out.println("Your current IP address : " + ip);
+            System.out.println("Your current Hostname : " + hostname);
+
             ConfigManager configManager = ConfigManager.create();
             ServerImplementation stub = new ServerImplementation();
             Naming.rebind(configManager.getValue(ConfigManager.RMI_REGISTRY_ADDRESS), stub);
@@ -26,7 +33,7 @@ public class Server {
             sender.sendMessageToClient(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), registerMessage);
             */
-            String getListmessage = "GetList;RMI;66.249.70.8;" + port;
+            String getListmessage = "GetList;RMI;" + hostname + ";" + port;
             String listofservers = sender.getList(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), getListmessage);
             System.out.println(listofservers);
