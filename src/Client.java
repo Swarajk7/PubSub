@@ -34,7 +34,7 @@ public class Client {
             new ClientReceiver(socket);
 
             //hardcoded server address
-            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://localhost:3000/khada004");
+            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://128.101.37.222:3267/khada004");
 
             //start ping thread
             new ClientPingServerThread(stub,IP,port);

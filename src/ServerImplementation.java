@@ -6,7 +6,7 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
     private Utility utility;
     private DataRepository data;
     private final boolean debug_mode = true;
-    
+
     protected ServerImplementation() throws RemoteException {
         super();
         utility = new Utility();
@@ -24,7 +24,7 @@ public class ServerImplementation extends UnicastRemoteObject implements IServer
 
     @Override
     public boolean leave(String IP, int PORT) throws RemoteException{
-        if(debug_mode) System.out.println("JOIN:"+IP + ":" + PORT);
+        if(debug_mode) System.out.println("LEAVE:"+IP + ":" + PORT);
         data.removeFromServer(IP,PORT);
         return true;
     }
