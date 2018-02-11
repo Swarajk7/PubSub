@@ -12,7 +12,7 @@ public class Client {
     public static void main(String args[]) {
         //take port number as command line argument
         System.out.println(args.length);
-        if(args.length != 1) {
+        if (args.length != 1) {
             System.out.println("Error.\nUsage java Client port_no");
             System.exit(1);
         }
@@ -20,8 +20,7 @@ public class Client {
         try {
             //check if port is integer
             port = Integer.parseInt(args[0]);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Invalid Port Number.\nUsage java Client port_no");
             System.exit(1);
         }
@@ -37,13 +36,12 @@ public class Client {
             IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://128.101.37.222:3267/khada004");
 
             //start ping thread
-            new ClientPingServerThread(stub,IP,port);
-
-            boolean breakfromloop = false;
+            new ClientPingServerThread(stub, IP, port);
+            
             String article;
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            while (!breakfromloop) {
+            while (true) {
                 try {
                     System.out.println("Choose an Option? \n1. JOIN\n" +
                             "2. LEAVE\n3. Subscribe\n4. UnSubscribe\n5. Publish\n6. Sleep");
@@ -80,7 +78,7 @@ public class Client {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    if(debugmode) break;
+                    if (debugmode) break;
                 }
             }
         } catch (Exception e) {
