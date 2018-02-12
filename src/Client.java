@@ -80,7 +80,7 @@ public class Client {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    if(debugmode) break;
+                    //if(debugmode) break;
                 }
             }
         } catch (Exception e) {
