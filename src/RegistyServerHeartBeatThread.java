@@ -34,9 +34,9 @@ public class RegistyServerHeartBeatThread implements Runnable {
                 //send same string message to server
                 sender.sendMessageToClient(this.registryServerAddress, this.registryServerPort, received);
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
     }

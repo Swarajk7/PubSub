@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.rmi.*;
 import java.util.Scanner;
 
@@ -27,12 +28,13 @@ public class Client {
             System.exit(1);
         }
         try {
-            DatagramSocket socket = new DatagramSocket(port);
-            InetAddress address = InetAddress.getByName("localhost");
-            String IP = address.getHostAddress();
-
+            DatagramSocket socket = new DatagramSocket(null);
+            String IP = InetAddress.getLocalHost().getHostAddress();
+            InetSocketAddress address = new InetSocketAddress(IP,port);
+            socket.bind(address);
+            System.out.println("Client IP:" + IP);
             //hardcoded server address
-            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://128.101.37.222:3267/khada004");
+            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://10.0.0.210:3267/khada004");
 
             String article;
 

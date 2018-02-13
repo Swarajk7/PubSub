@@ -19,6 +19,7 @@ public class PublishQueueListener implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Server Sender");
         while (true) {
             Pair<String, String> itemToPublish = repository.getHeadItemFromPublishQueue(); //thread safe
             if(itemToPublish==null) {

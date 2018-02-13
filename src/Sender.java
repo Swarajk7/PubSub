@@ -16,6 +16,7 @@ public class Sender implements ISender {
         ConfigManager configManager = ConfigManager.create();
         int port = Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT));
         this.socket = UDPSocket.createSocket(port);
+        //this.socket.setSoTimeout(3000);
     }
 
     public Sender(DatagramSocket socket) {
