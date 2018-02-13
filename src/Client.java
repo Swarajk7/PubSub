@@ -8,6 +8,8 @@ import java.util.Scanner;
 public class Client {
 
     private static final boolean debugmode = true;
+    private static ClientPingServerThread clientPingServerThread;
+    private static ClientArticleReceiverThread clientReceiver;
 
     public static void main(String args[]) {
         //take port number as command line argument
@@ -29,15 +31,9 @@ public class Client {
             InetAddress address = InetAddress.getByName("localhost");
             String IP = address.getHostAddress();
 
-            //start the receiver thread to receive the incoming messages and run infinitely
-            new ClientReceiver(socket);
-
             //hardcoded server address
             IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://128.101.37.222:3267/khada004");
 
-            //start ping thread
-            new ClientPingServerThread(stub, IP, port);
-            
             String article;
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -48,9 +44,17 @@ public class Client {
                     int readValue = Integer.parseInt(reader.readLine());
                     switch (readValue) {
                         case 1:
+                            //start ping thread
+                            clientPingServerThread = new ClientPingServerThread(stub, IP, port);
+                            //start the receiver thread to receive the incoming messages and run infinitely
+                            clientReceiver = new ClientArticleReceiverThread(socket);
                             stub.join(IP, port);
                             break;
                         case 2:
+                            //garbage collect the object, which will make Java Runtime to stop the thread. Again on rejoin
+                            //create a new thread
+                            clientPingServerThread = null;
+                            clientReceiver = null;
                             stub.leave(IP, port);
                             break;
                         case 3:
@@ -78,7 +82,7 @@ public class Client {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    if (debugmode) break;
+                    //if(debugmode) break;
                 }
             }
         } catch (Exception e) {

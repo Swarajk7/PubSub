@@ -14,7 +14,7 @@ public class DataRepository {
     private int MAX_COUNT = 10;
     private static DataRepository repository;
     private Utility utility;
-    private Queue<Pair<String,String>> publishQueue;
+    private Queue<Pair<String, String>> publishQueue;
 
     private DataRepository() {
         typeToClientMap = new HashMap<>();
@@ -72,7 +72,7 @@ public class DataRepository {
         if (!utility.validateArticle(article, false)) throw new RemoteException("Invalid Article");
 
         //trim the string to remove padding spaces
-        String[] words = article.trim().split(";",-1);
+        String[] words = article.trim().split(";", -1);
 
         if (!"".equals(words[0])) {
             if (typeToClientMap.containsKey(words[0])) {
@@ -123,7 +123,7 @@ public class DataRepository {
         if (!utility.validateArticle(article, false)) throw new RemoteException("Invalid Article");
 
         //trim the string to remove padding spaces
-        String[] words = article.trim().split(";",-1);
+        String[] words = article.trim().split(";", -1);
 
         if (!"".equals(words[0])) {
             if (typeToClientMap.containsKey(words[0])) {
@@ -157,9 +157,17 @@ public class DataRepository {
     }
 
     public ClientDetails validateAndGetClientForPublish(String key, String[] tokens) {
-        return clientMap.get(key);
+        ClientDetails clientDetails = clientMap.get(key);
+        //if client is not in clientMap, return null
+        if (clientDetails == null) return null;
+        if (!clientDetails.subscribedType.contains(tokens[0]) && !clientDetails.subscribedOriginator.contains(tokens[1])
+                && !clientDetails.subscribedOrganization.contains(tokens[2])) {
+            return null;
+        }
+        return clientDetails;
     }
-    public void publish(String article, String IP, int PORT) throws  RemoteException {
+
+    public void publish(String article, String IP, int PORT) throws RemoteException {
         if (!utility.validateIP(IP)) throw new RemoteException("Invalid IP Address");
         String ip_port = utility.appendIPAndPort(IP, PORT);
 
@@ -188,10 +196,10 @@ public class DataRepository {
         }
 
         for (String type : publishSet) {
-            Pair tmpPair = new Pair(type, article);
-            publishQueue.add(tmpPair);
+            if (!ip_port.equals(type)) {
+                Pair<String, String> tmpPair = new Pair(type, article);
+                publishQueue.add(tmpPair);
+            }
         }
-
     }
-
 }
