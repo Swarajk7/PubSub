@@ -34,7 +34,7 @@ public class Client {
             socket.bind(address);
             System.out.println("Client IP:" + IP);
             //hardcoded server address
-            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://10.0.0.210:3267/khada004");
+            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://10.0.0.210:58970/pubsub");
 
             String article;
 

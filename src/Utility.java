@@ -18,7 +18,7 @@ public class Utility {
 
     boolean validateArticle(String article, boolean is_publish) {
         if (article.length() > 120) return false;
-        String[] tokens = article.split(";",-1);
+        String[] tokens = article.split(";", -1);
         if (tokens.length != 4) {
             return false;
         }
@@ -47,4 +47,23 @@ public class Utility {
         return IP + ":" + port;
     }
 
+    String createRMIConnectionString(String ip, int port, String binding_name) {
+        return "rmi://" + ip + ":" + port + "/" + binding_name;
+    }
+
+    public String createUDPMessageForRegister(String ip, int rmiport, String bindingname, int incomingupdport) {
+        return "Register;RMI;"
+                + ip + ";"
+                + rmiport + ";"
+                + bindingname + ";"
+                + incomingupdport;
+    }
+
+    public String createUDPMessageForGetList(String ip, int rmiport) {
+        return "GetList;RMI;" + ip + ";" + rmiport;
+    }
+
+    public String createUDPMessageForDeRegister(String ip, int rmiport) {
+        return "Deregister;RMI;" + ip + ";" + rmiport;
+    }
 }

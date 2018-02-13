@@ -7,6 +7,7 @@ public class PublishQueueListener implements Runnable {
     private ISender sender;
     private DataRepository repository;
     private String name;
+    private boolean debug_mode;
 
     PublishQueueListener(String name) throws IOException {
         //store name and get repository, socket which uses singleton
@@ -14,6 +15,7 @@ public class PublishQueueListener implements Runnable {
         ConfigManager configManager = ConfigManager.create();
         sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT))));
         repository = DataRepository.create();
+        debug_mode = Boolean.parseBoolean(configManager.getValue(ConfigManager.IS_DEBUG));
         new Thread(this, name).start();
     }
 
@@ -22,11 +24,12 @@ public class PublishQueueListener implements Runnable {
         System.out.println("Server Sender");
         while (true) {
             Pair<String, String> itemToPublish = repository.getHeadItemFromPublishQueue(); //thread safe
-            if(itemToPublish==null) {
+            if (itemToPublish == null) {
                 try {
                     Thread.sleep(100);
                 } catch (Exception ex) {
-                    System.out.println("Thread Name:" + this.name + " " + ex.getMessage());
+                    if (debug_mode)
+                        System.out.println("Thread Name:" + this.name + " " + ex.getMessage());
                 }
                 continue;
             }
@@ -37,9 +40,11 @@ public class PublishQueueListener implements Runnable {
                 try {
                     sender.sendMessageToClient(clientDetails.IP, clientDetails.port, tokens[3]);
                 } catch (Exception ex) {
-                    ex.printStackTrace();
-                    System.out.println("Thread Name:" + this.name + " " + ex.getMessage());
-                    System.out.println("Client IP:" + clientDetails.IP + "Client Port:" + clientDetails.port + "\n");
+                    if (debug_mode) {
+                        ex.printStackTrace();
+                        System.out.println("Thread Name:" + this.name + " " + ex.getMessage());
+                        System.out.println("Client IP:" + clientDetails.IP + "Client Port:" + clientDetails.port + "\n");
+                    }
                 }
             }
         }

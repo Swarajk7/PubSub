@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.rmi.*;
 import java.rmi.server.*;
 
@@ -5,12 +6,14 @@ import java.rmi.server.*;
 public class ServerImplementation extends UnicastRemoteObject implements IServerImplementation {
     private Utility utility;
     private DataRepository data;
-    private final boolean debug_mode = true;
+    private boolean debug_mode = false;
 
-    protected ServerImplementation() throws RemoteException {
+    protected ServerImplementation() throws IOException {
         super();
         utility = new Utility();
         data = DataRepository.create();
+        ConfigManager configManager = ConfigManager.create();
+        debug_mode = Boolean.parseBoolean(configManager.getValue(ConfigManager.IS_DEBUG));
     }
 
     @Override

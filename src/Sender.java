@@ -14,7 +14,7 @@ public class Sender implements ISender {
     public Sender() throws IOException {
         this.isSocketCreated = true;
         ConfigManager configManager = ConfigManager.create();
-        int port = Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT));
+        int port = configManager.getIntegerValue(ConfigManager.UDP_SERVER_PORT);
         this.socket = UDPSocket.createSocket(port);
         //this.socket.setSoTimeout(3000);
     }
