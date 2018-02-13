@@ -11,8 +11,11 @@ ConfigurationManger is also readonly and hence won't cause any conflicts or conc
 public class ConfigManager {
     public static final String RMI_REGISTRY_ADDRESS = "rmiregistryaddress";
     public static final String UDP_SERVER_PORT = "port";
+    public static final String REGISTRY_SERVER_ADDRESS = "registryserveraddress";
+    public static final String REGISTRY_SERVER_PORT = "registryserverport";
+    public static final String UDP_SERVER_PORT2 = "updserverport2";
     //fix below line for better lookup.. don't hardcode
-    private static String filename = "C:\\Users\\sk111\\OneDrive\\Documents\\private\\PubSub_V2\\server_config.properties";
+    private static String filename = "/home/khada004/Documents/PubSub_V2/server_config.properties";
     private Properties prop;
     private static ConfigManager obj = null;
 

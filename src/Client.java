@@ -32,13 +32,12 @@ public class Client {
             String IP = address.getHostAddress();
 
             //hardcoded server address
-            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://localhost:3000/khada004");
+            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://128.101.37.222:3267/khada004");
 
-            boolean breakfromloop = false;
             String article;
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            while (!breakfromloop) {
+            while (true) {
                 try {
                     System.out.println("Choose an Option? \n1. JOIN\n" +
                             "2. LEAVE\n3. Subscribe\n4. UnSubscribe\n5. Publish\n6. Sleep");
