@@ -5,10 +5,10 @@ This is a thread which will keep running and it will listen to a socket at a giv
 We need to implement singleton socket at client also. Then we won't need to pass around socket object.
 Singleton will work fine because socket is readonly.
  */
-public class ClientReceiver implements Runnable{
+public class ClientArticleReceiverThread implements Runnable{
     private DatagramSocket socket;
     private byte[] buf = new byte[256];
-    public ClientReceiver(DatagramSocket socket) {
+    public ClientArticleReceiverThread(DatagramSocket socket) {
         this.socket = socket;
         new Thread(this, "ClientReceiver").start();
     }

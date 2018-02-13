@@ -8,11 +8,13 @@ import java.util.Scanner;
 public class Client {
 
     private static final boolean debugmode = true;
+    private static ClientPingServerThread clientPingServerThread;
+    private static ClientArticleReceiverThread clientReceiver;
 
     public static void main(String args[]) {
         //take port number as command line argument
         System.out.println(args.length);
-        if(args.length != 1) {
+        if (args.length != 1) {
             System.out.println("Error.\nUsage java Client port_no");
             System.exit(1);
         }
@@ -20,8 +22,7 @@ public class Client {
         try {
             //check if port is integer
             port = Integer.parseInt(args[0]);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Invalid Port Number.\nUsage java Client port_no");
             System.exit(1);
         }
@@ -30,14 +31,8 @@ public class Client {
             InetAddress address = InetAddress.getByName("localhost");
             String IP = address.getHostAddress();
 
-            //start the receiver thread to receive the incoming messages and run infinitely
-            new ClientReceiver(socket);
-
             //hardcoded server address
             IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://localhost:3000/khada004");
-
-            //start ping thread
-            new ClientPingServerThread(stub,IP,port);
 
             boolean breakfromloop = false;
             String article;
@@ -50,9 +45,17 @@ public class Client {
                     int readValue = Integer.parseInt(reader.readLine());
                     switch (readValue) {
                         case 1:
+                            //start ping thread
+                            clientPingServerThread = new ClientPingServerThread(stub, IP, port);
+                            //start the receiver thread to receive the incoming messages and run infinitely
+                            clientReceiver = new ClientArticleReceiverThread(socket);
                             stub.join(IP, port);
                             break;
                         case 2:
+                            //garbage collect the object, which will make Java Runtime to stop the thread. Again on rejoin
+                            //create a new thread
+                            clientPingServerThread = null;
+                            clientReceiver = null;
                             stub.leave(IP, port);
                             break;
                         case 3:
