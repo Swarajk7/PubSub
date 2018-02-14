@@ -64,21 +64,25 @@ public class Client {
                             clientPingServerThread = null;
                             clientReceiver = null;
                             stub.leave(IP, port);
+                            System.out.println(ANSI_GREEN + "You have succesfully left the server! " + ANSI_RESET);
                             break;
                         case 3:
                             System.out.println("Enter Subscribe Article?");
                             article = reader.readLine();
                             stub.subscribe(IP, port, article);
+                            System.out.println(ANSI_GREEN + "You have succesfully subscribed " + ANSI_RESET);
                             break;
                         case 4:
                             System.out.println("Enter UnSubscribe Article?");
                             article = reader.readLine();
                             stub.unsubscribe(IP, port, article);
+                            System.out.println(ANSI_GREEN + "You have succesfully unsubscribed " + ANSI_RESET);
                             break;
                         case 5:
                             System.out.println("Enter Publish Article?");
                             article = reader.readLine();
                             stub.publish(article, IP, port);
+                            System.out.println(ANSI_GREEN + "You have succesfully published " + ANSI_RESET);
                             break;
                         case 6:
                             int sleeptime = Integer.parseInt(reader.readLine());

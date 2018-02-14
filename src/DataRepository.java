@@ -73,6 +73,10 @@ public class DataRepository {
 
             clientMap.remove(ip_port);
         }
+        else{
+            throw new RemoteException("Haven't joined server yet!!!");
+        }
+
     }
 
     public void subscribe(String IP, int PORT, String article) throws RemoteException {
@@ -183,6 +187,8 @@ public class DataRepository {
     public void publish(String article, String IP, int PORT) throws RemoteException {
         if (!utility.validateIP(IP)) throw new RemoteException("Invalid IP Address");
         String ip_port = utility.appendIPAndPort(IP, PORT);
+
+        if (!clientMap.containsKey(ip_port)) throw new RemoteException("Haven't joined server yet!!!");
 
         if (!utility.validateArticle(article, true)) throw new RemoteException("Invalid Article");
 

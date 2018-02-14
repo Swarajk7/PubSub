@@ -2,6 +2,8 @@ import java.rmi.RemoteException;
 
 public class ClientPingServerThread implements Runnable {
     private IServerImplementation stub;
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     ClientPingServerThread(IServerImplementation stub, String IP, int port) {
         this.stub = stub;
@@ -19,7 +21,7 @@ public class ClientPingServerThread implements Runnable {
         int cnt = 0;
         while (true) {
             try {
-                System.out.println("Pinging");
+                System.out.println(ANSI_GREEN + "Pinging" + ANSI_RESET);
                 Thread.sleep(t);
                 String message = stub.ping();
                 t = sleep_time;
