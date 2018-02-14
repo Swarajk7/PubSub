@@ -9,6 +9,9 @@ import java.util.Scanner;
 public class Client {
     private static ClientPingServerThread clientPingServerThread;
     private static ClientArticleReceiverThread clientReceiver;
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
 
     public static void main(String args[]) {
         //take port number as command line argument
@@ -53,6 +56,7 @@ public class Client {
                             //start the receiver thread to receive the incoming messages and run infinitely
                             clientReceiver = new ClientArticleReceiverThread(socket);
                             stub.join(IP, port);
+                            System.out.println(ANSI_GREEN + "You have succesfully joined the server! " + ANSI_RESET);
                             break;
                         case 2:
                             //garbage collect the object, which will make Java Runtime to stop the thread. Again on rejoin
@@ -97,7 +101,7 @@ public class Client {
                             break;
                     }
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    System.out.println(ANSI_RED + ex.getMessage() + ANSI_RESET);
                 }
             }
         } catch (Exception e) {
