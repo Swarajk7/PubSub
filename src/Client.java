@@ -62,16 +62,28 @@ public class Client {
                             stub.leave(IP, port);
                             break;
                         case 3:
+                            if(clientReceiver == null) {
+                                System.out.println("Please JOIN the server first");
+                                continue;
+                            }
                             System.out.println("Enter Subscribe Article?");
                             article = reader.readLine();
                             stub.subscribe(IP, port, article);
                             break;
                         case 4:
+                            if(clientReceiver == null) {
+                                System.out.println("Please JOIN the server first");
+                                continue;
+                            }
                             System.out.println("Enter UnSubscribe Article?");
                             article = reader.readLine();
                             stub.unsubscribe(IP, port, article);
                             break;
                         case 5:
+                            if(clientReceiver == null) {
+                                System.out.println("Please JOIN the server first");
+                                continue;
+                            }
                             System.out.println("Enter Publish Article?");
                             article = reader.readLine();
                             stub.publish(article, IP, port);
