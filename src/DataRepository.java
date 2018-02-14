@@ -1,5 +1,6 @@
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.*;
@@ -14,18 +15,21 @@ public class DataRepository {
     private int MAX_COUNT = 10;
     private static DataRepository repository;
     private Utility utility;
-    private Queue<Pair<String, String>> publishQueue;
+    private Queue<Pair<String, String>>[] publishQueues;
 
-    private DataRepository() {
+    private DataRepository() throws IOException {
         typeToClientMap = new HashMap<>();
         organizationToClientMap = new HashMap<>();
         originatorToClientMap = new HashMap<>();
         clientMap = new HashMap<>();
         utility = new Utility();
-        publishQueue = new ConcurrentLinkedQueue<>();
+        ConfigManager configManager = ConfigManager.create();
+        publishQueues = new Queue[configManager.getIntegerValue(ConfigManager.NUMBER_OF_PUBLISH_THREADS)];
+        for (int i = 0; i < publishQueues.length; i++)
+            publishQueues[i] = new ConcurrentLinkedQueue<>();
     }
 
-    public static DataRepository create() {
+    public static DataRepository create() throws IOException {
         if (repository == null) repository = new DataRepository();
         return repository;
     }
@@ -151,9 +155,9 @@ public class DataRepository {
 
     }
 
-    public Pair<String, String> getHeadItemFromPublishQueue() {
+    public Pair<String, String> getHeadItemFromPublishQueue(int queue_no) {
         //ensures no other thread is getting this item and Queue is concurreny safe
-        return publishQueue.poll();
+        return publishQueues[queue_no].poll();
     }
 
     public ClientDetails validateAndGetClientForPublish(String key, String[] tokens) {
@@ -195,10 +199,13 @@ public class DataRepository {
             }
         }
 
+        //put in queues in round robin fashion.
+        int queue_no = 0;
         for (String type : publishSet) {
             if (!ip_port.equals(type)) {
                 Pair<String, String> tmpPair = new Pair(type, article);
-                publishQueue.add(tmpPair);
+                publishQueues[queue_no].add(tmpPair);
+                queue_no = (queue_no + 1) % (publishQueues.length);
             }
         }
     }

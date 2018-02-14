@@ -33,13 +33,11 @@ public class Server {
 
             ISender sender = new Sender(socket);
 
-            //create a new thread to start listening to incoming messages
-            new RegistyServerHeartBeatThread(socket);
-
             int numer_of_publisher_threads = configManager.getIntegerValue(ConfigManager.NUMBER_OF_PUBLISH_THREADS);
             //spawn threads to publish queue
             for (int i = 0; i < numer_of_publisher_threads; i++) {
-                new PublishQueueListener("PublisherThread:" + i);
+                //pass name of the thread and assign a queue number to poll
+                new PublishQueueListener("PublisherThread:" + i, i);
             }
 
             //register server message [“Register;RMI;IP;Port;BindingName;Port for RMI”]
@@ -55,6 +53,10 @@ public class Server {
             String listofservers = sender.getList(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), getListmessage);
             System.out.println("List of Servers:" + listofservers);
+
+            //create a new thread to start listening to incoming messages
+            new RegistyServerHeartBeatThread(socket);
+
             /*
             String ip_port = ip + ";" + 3267;
             if (!listofservers.contains(ip_port)) {
