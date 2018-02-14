@@ -1,2 +1,3 @@
 *.class
 vcs.xml
+output/*
