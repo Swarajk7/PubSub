@@ -7,14 +7,12 @@ import java.rmi.*;
 import java.util.Scanner;
 
 public class Client {
-
-    private static final boolean debugmode = true;
     private static ClientPingServerThread clientPingServerThread;
     private static ClientArticleReceiverThread clientReceiver;
 
     public static void main(String args[]) {
         //take port number as command line argument
-        System.out.println(args.length);
+        //System.out.println(args.length);
         if (args.length != 1) {
             System.out.println("Error.\nUsage java Client port_no");
             System.exit(1);
@@ -30,11 +28,15 @@ public class Client {
         try {
             DatagramSocket socket = new DatagramSocket(null);
             String IP = InetAddress.getLocalHost().getHostAddress();
-            InetSocketAddress address = new InetSocketAddress(IP,port);
+            InetSocketAddress address = new InetSocketAddress(IP, port);
             socket.bind(address);
             System.out.println("Client IP:" + IP);
             //hardcoded server address
-            IServerImplementation stub = (IServerImplementation) Naming.lookup("rmi://10.0.0.210:58970/pubsub");
+            ClientConfigManager clientConfigManager = ClientConfigManager.create();
+            String serverEndPoint = "rmi://" + clientConfigManager.getValue(ClientConfigManager.RMI_REGISTRY_ADDRESS)
+                    + ":" + clientConfigManager.getValue(ClientConfigManager.RMI_PORT_NUMBER) + "/" +
+                    clientConfigManager.getValue(ClientConfigManager.RMI_BINDING_NAME);
+            IServerImplementation stub = (IServerImplementation) Naming.lookup(serverEndPoint);
 
             String article;
 
@@ -84,7 +86,6 @@ public class Client {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    //if(debugmode) break;
                 }
             }
         } catch (Exception e) {

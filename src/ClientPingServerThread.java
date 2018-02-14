@@ -2,11 +2,9 @@ import java.rmi.RemoteException;
 
 public class ClientPingServerThread implements Runnable {
     private IServerImplementation stub;
-    private String debug_message;
 
     ClientPingServerThread(IServerImplementation stub, String IP, int port) {
         this.stub = stub;
-        this.debug_message = IP + ":" + port;
         new Thread(this, "PingThread").start();
     }
 
