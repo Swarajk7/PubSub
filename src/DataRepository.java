@@ -42,6 +42,15 @@ public class DataRepository {
             ClientDetails clientDetails = new ClientDetails(IP, PORT);
             clientMap.put(ip_port, clientDetails);
         }
+        else{
+            if (clientMap.size() >= MAX_COUNT){
+                throw new RemoteException("Maximum Number of Clients reached. Pls try later");
+            }
+            else if(clientMap.containsKey(ip_port)){
+                throw new RemoteException("You have already joined the server before");
+            }
+
+        }
     }
 
     public void removeFromServer(String IP, int PORT) throws RemoteException {
