@@ -47,7 +47,7 @@ public class Client {
             while (true) {
                 try {
                     System.out.println("Choose an Option? \n1. JOIN\n" +
-                            "2. LEAVE\n3. Subscribe\n4. UnSubscribe\n5. Publish\n6. Sleep");
+                            "2. LEAVE\n3. Subscribe\n4. UnSubscribe\n5. Publish\n");
                     int readValue = Integer.parseInt(reader.readLine());
                     switch (readValue) {
                         case 1:
@@ -68,40 +68,36 @@ public class Client {
                             break;
                         case 3:
                             if(clientReceiver == null) {
-                                System.out.println("Please JOIN the server first");
+                                System.out.println(ANSI_RED  + "Please JOIN the server first" + ANSI_RESET);
                                 continue;
                             }
-                            System.out.println("Enter Subscribe Article?");
+                            System.out.println("Enter the topic to subscribe ");
                             article = reader.readLine();
                             stub.subscribe(IP, port, article);
                             System.out.println(ANSI_GREEN + "You have succesfully subscribed " + ANSI_RESET);
                             break;
                         case 4:
                             if(clientReceiver == null) {
-                                System.out.println("Please JOIN the server first");
+                                System.out.println(ANSI_RED  + "Please JOIN the server first" + ANSI_RESET);
                                 continue;
                             }
-                            System.out.println("Enter UnSubscribe Article?");
+                            System.out.println("Enter the topic to unsubscribe");
                             article = reader.readLine();
                             stub.unsubscribe(IP, port, article);
                             System.out.println(ANSI_GREEN + "You have succesfully unsubscribed " + ANSI_RESET);
                             break;
                         case 5:
                             if(clientReceiver == null) {
-                                System.out.println("Please JOIN the server first");
+                                System.out.println(ANSI_RED + "Please JOIN the server first" + ANSI_RESET);
                                 continue;
                             }
-                            System.out.println("Enter Publish Article?");
+                            System.out.println("Enter the article to publish");
                             article = reader.readLine();
                             stub.publish(article, IP, port);
                             System.out.println(ANSI_GREEN + "You have succesfully published " + ANSI_RESET);
                             break;
-                        case 6:
-                            int sleeptime = Integer.parseInt(reader.readLine());
-                            Thread.sleep(sleeptime);
-                            break;
                         default:
-                            System.out.println("Invalid Input");
+                            System.out.println(ANSI_RED  + "Invalid Input" + ANSI_RESET);
                             break;
                     }
                 } catch (Exception ex) {
