@@ -4,6 +4,7 @@ public class ClientPingServerThread implements Runnable {
     private IServerImplementation stub;
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
 
     ClientPingServerThread(IServerImplementation stub, String IP, int port) {
         this.stub = stub;
@@ -16,7 +17,7 @@ public class ClientPingServerThread implements Runnable {
         //if ping fails, try again in 5 secs 3 times.
         //if it fails for 3 times, sleep for 2 minutes
         //extra logic can be added.
-        int sleep_time = 60 * 1000 * 2;
+        int sleep_time = 60 * 1000 * 1;
         int t = sleep_time;
         int cnt = 0;
         while (true) {
@@ -26,11 +27,11 @@ public class ClientPingServerThread implements Runnable {
                 String message = stub.ping();
                 t = sleep_time;
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(ANSI_RED + e.getMessage() + ANSI_RESET);
                 t = 5000;
                 cnt++;
                 if (cnt == 3) {
-                    System.out.println("Server Down!!");
+                    System.out.println(ANSI_RED + "Server Down!!" + ANSI_RESET);
                     t = sleep_time;
                     cnt = 0;
                 }

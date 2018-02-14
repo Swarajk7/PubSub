@@ -68,7 +68,7 @@ public class Client {
                             break;
                         case 3:
                             if(clientReceiver == null) {
-                                System.out.println(ANSI_RED  + "Please JOIN the server first" + ANSI_RESET);
+                                System.out.println(ANSI_RED  + "Please join the server first" + ANSI_RESET);
                                 continue;
                             }
                             System.out.println("Enter the topic to subscribe ");
@@ -78,7 +78,7 @@ public class Client {
                             break;
                         case 4:
                             if(clientReceiver == null) {
-                                System.out.println(ANSI_RED  + "Please JOIN the server first" + ANSI_RESET);
+                                System.out.println(ANSI_RED  + "Please join the server first" + ANSI_RESET);
                                 continue;
                             }
                             System.out.println("Enter the topic to unsubscribe");
@@ -88,7 +88,7 @@ public class Client {
                             break;
                         case 5:
                             if(clientReceiver == null) {
-                                System.out.println(ANSI_RED + "Please JOIN the server first" + ANSI_RESET);
+                                System.out.println(ANSI_RED + "Please join the server first" + ANSI_RESET);
                                 continue;
                             }
                             System.out.println("Enter the article to publish");
