@@ -14,7 +14,8 @@ public class PublishQueueListener implements Runnable {
         //store name and get repository, socket which uses singleton
         this.name = name;
         ConfigManager configManager = ConfigManager.create();
-        sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT))));
+        //use baseport + queue_no to create multiple socket
+        sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT )) + queue_no));
         repository = DataRepository.create();
         debug_mode = Boolean.parseBoolean(configManager.getValue(ConfigManager.IS_DEBUG));
         assigned_queue_number = queue_no;

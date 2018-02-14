@@ -67,18 +67,30 @@ public class Client {
                             System.out.println(ANSI_GREEN + "You have succesfully left the server! " + ANSI_RESET);
                             break;
                         case 3:
+                            if(clientReceiver == null) {
+                                System.out.println("Please JOIN the server first");
+                                continue;
+                            }
                             System.out.println("Enter Subscribe Article?");
                             article = reader.readLine();
                             stub.subscribe(IP, port, article);
                             System.out.println(ANSI_GREEN + "You have succesfully subscribed " + ANSI_RESET);
                             break;
                         case 4:
+                            if(clientReceiver == null) {
+                                System.out.println("Please JOIN the server first");
+                                continue;
+                            }
                             System.out.println("Enter UnSubscribe Article?");
                             article = reader.readLine();
                             stub.unsubscribe(IP, port, article);
                             System.out.println(ANSI_GREEN + "You have succesfully unsubscribed " + ANSI_RESET);
                             break;
                         case 5:
+                            if(clientReceiver == null) {
+                                System.out.println("Please JOIN the server first");
+                                continue;
+                            }
                             System.out.println("Enter Publish Article?");
                             article = reader.readLine();
                             stub.publish(article, IP, port);
