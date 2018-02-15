@@ -55,7 +55,7 @@ public class Server {
             System.out.println("List of Servers:" + listofservers);
 
             //create a new thread to start listening to incoming messages
-            new RegistyServerHeartBeatThread(socket);
+            new RegistyServerHeartBeatThread();
 
             /*
             String ip_port = ip + ";" + 3267;

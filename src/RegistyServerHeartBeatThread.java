@@ -11,10 +11,10 @@ public class RegistyServerHeartBeatThread implements Runnable {
     private int registryServerPort;
     private boolean debug_mode;
 
-    public RegistyServerHeartBeatThread(DatagramSocket socket) throws IOException {
-        this.sender = new Sender(socket);
-        this.socket = socket;
+    public RegistyServerHeartBeatThread() throws IOException {
         ConfigManager configManager = ConfigManager.create();
+        this.socket = UDPSocket.createSocket(configManager.getIntegerValue(ConfigManager.RMI_PORT_NUMBER));
+        this.sender = new Sender(socket);
         this.registryServerAddress = configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS);
         this.registryServerPort = Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT));
         debug_mode = Boolean.parseBoolean(configManager.getValue(ConfigManager.IS_DEBUG));
