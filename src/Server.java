@@ -65,6 +65,7 @@ public class Server {
             }
             */
             //code for deregistration
+            /*
             String deRegistermessage = utility.createUDPMessageForDeRegister(ip,configManager.getIntegerValue(ConfigManager.RMI_PORT_NUMBER));
             sender.sendMessageToClient(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), deRegistermessage);
@@ -73,7 +74,7 @@ public class Server {
             listofservers = sender.getList(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                             Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), getListmessage);
             System.out.println(listofservers);
-
+            */
 
         } catch (Exception e) {
             e.printStackTrace();
