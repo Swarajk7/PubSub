@@ -30,11 +30,12 @@ public class RegistyServerHeartBeatThread implements Runnable {
             try {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
+                int portno = packet.getPort();
                 String received = new String(packet.getData(), 0, packet.getLength());  //change DatagramPacket information to received
                 System.out.println("Running: " + received);
                 //if it fails what to do think?
                 //send same string message to server
-                sender.sendMessageToClient(this.registryServerAddress, this.registryServerPort, received);
+                sender.sendMessageToClient(this.registryServerAddress, portno, received);
             } catch (IOException e) {
                 if (debug_mode) System.out.println(e.getMessage());
             } catch (Exception e) {
