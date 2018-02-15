@@ -25,6 +25,7 @@ public class DataRepository {
         utility = new Utility();
         ConfigManager configManager = ConfigManager.create();
         publishQueues = new Queue[configManager.getIntegerValue(ConfigManager.NUMBER_OF_PUBLISH_THREADS)];
+        MAX_COUNT = configManager.getIntegerValue(ConfigManager.MAX_CLIENT_COUNT);
         for (int i = 0; i < publishQueues.length; i++)
             publishQueues[i] = new ConcurrentLinkedQueue<>();
     }

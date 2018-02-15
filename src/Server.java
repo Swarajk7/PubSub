@@ -49,13 +49,13 @@ public class Server {
 
             //getList and print for now, twist as per need as time comes
             String getListmessage = utility.createUDPMessageForGetList(ip,configManager.getIntegerValue(ConfigManager.RMI_PORT_NUMBER));
-            System.out.println("GetListMessage: " + getListmessage);
+            System.out.println("GetList Request Message: " + getListmessage);
             String listofservers = sender.getList(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), getListmessage);
             System.out.println("List of Servers:" + listofservers);
 
             //create a new thread to start listening to incoming messages
-            new RegistyServerHeartBeatThread(socket);
+            new RegistyServerHeartBeatThread();
 
             /*
             String ip_port = ip + ";" + 3267;
@@ -65,6 +65,7 @@ public class Server {
             }
             */
             //code for deregistration
+            /*
             String deRegistermessage = utility.createUDPMessageForDeRegister(ip,configManager.getIntegerValue(ConfigManager.RMI_PORT_NUMBER));
             sender.sendMessageToClient(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), deRegistermessage);
@@ -73,7 +74,7 @@ public class Server {
             listofservers = sender.getList(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                             Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), getListmessage);
             System.out.println(listofservers);
-
+            */
 
         } catch (Exception e) {
             e.printStackTrace();
