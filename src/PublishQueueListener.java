@@ -10,12 +10,12 @@ public class PublishQueueListener implements Runnable {
     private boolean debug_mode;
     private int assigned_queue_number;
 
-    PublishQueueListener(String name,int queue_no) throws IOException {
+    PublishQueueListener(String name, int queue_no) throws IOException {
         //store name and get repository, socket which uses singleton
         this.name = name;
         ConfigManager configManager = ConfigManager.create();
         //use baseport + queue_no to create multiple socket
-        sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT )) + queue_no));
+        sender = new Sender(UDPSocket.createSocket(Integer.parseInt(configManager.getValue(ConfigManager.UDP_SERVER_PORT)) + queue_no));
         repository = DataRepository.create();
         debug_mode = Boolean.parseBoolean(configManager.getValue(ConfigManager.IS_DEBUG));
         assigned_queue_number = queue_no;
@@ -24,7 +24,7 @@ public class PublishQueueListener implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Server Sender");
+        System.out.println("Server to Client Publish Thread Started and listening to queue : " + this.assigned_queue_number);
         while (true) {
             Pair<String, String> itemToPublish = repository.getHeadItemFromPublishQueue(this.assigned_queue_number); //thread safe
             if (itemToPublish == null) {

@@ -49,7 +49,7 @@ public class Server {
 
             //getList and print for now, twist as per need as time comes
             String getListmessage = utility.createUDPMessageForGetList(ip,configManager.getIntegerValue(ConfigManager.RMI_PORT_NUMBER));
-            System.out.println("GetListMessage: " + getListmessage);
+            System.out.println("GetList Request Message: " + getListmessage);
             String listofservers = sender.getList(configManager.getValue(ConfigManager.REGISTRY_SERVER_ADDRESS),
                     Integer.parseInt(configManager.getValue(ConfigManager.REGISTRY_SERVER_PORT)), getListmessage);
             System.out.println("List of Servers:" + listofservers);

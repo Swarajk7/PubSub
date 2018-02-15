@@ -25,14 +25,14 @@ public class RegistyServerHeartBeatThread implements Runnable {
     public void run() {
         //[“Register;RMI;IP;Port;BindingName;Port for RMI”]
         byte[] buf = new byte[1024];
-        System.out.println("HeartbeatThreadRunning");
+        System.out.println("Heartbeat Thread Started");
         while (true) {
             try {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 int portno = packet.getPort();
                 String received = new String(packet.getData(), 0, packet.getLength());  //change DatagramPacket information to received
-                System.out.println("Running: " + received);
+                //System.out.println("Running: " + received);
                 //if it fails what to do think?
                 //send same string message to server
                 sender.sendMessageToClient(this.registryServerAddress, portno, received);

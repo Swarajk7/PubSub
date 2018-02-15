@@ -20,6 +20,7 @@ public class ConfigManager {
     public static final String SOCKET_TIMEOUT = "sockettimeout";
     public static final String NUMBER_OF_PUBLISH_THREADS = "numerofpublisherthreads";
     public static final String IS_DEBUG = "isdebug";
+    public static final String MAX_CLIENT_COUNT = "maxclientcount";
     //fix below line for better lookup.. don't hardcode
     private static String filename = "./server_config.properties";
     private Properties prop;
