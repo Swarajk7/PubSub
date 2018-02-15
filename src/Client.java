@@ -40,8 +40,11 @@ public class Client {
                     + ":" + clientConfigManager.getValue(ClientConfigManager.RMI_PORT_NUMBER) + "/" +
                     clientConfigManager.getValue(ClientConfigManager.RMI_BINDING_NAME);
             IServerImplementation stub = (IServerImplementation) Naming.lookup(serverEndPoint);
+            stub.ping();
 
             String article;
+
+
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
